@@ -12,5 +12,4 @@ class Pizza(db.Model):
         backref = 'pizza',
     )
 
-    def __repr__(self):
-        return f'<Pizza {self.name}>'
+  

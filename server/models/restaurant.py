@@ -12,5 +12,4 @@ class Restaurant(db.Model):
         backref='restaurant',
         cascade='all, delete-orphan')
     
-    def __repr__(self):
-        return f'<Restaurant {self.name}>'
+   

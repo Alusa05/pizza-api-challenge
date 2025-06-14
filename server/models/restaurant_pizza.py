@@ -8,5 +8,7 @@ class RestaurantPizza(db.Model):
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'), nullable=False)
 
-    def __repr__(self):
-        return f'<RestaurantPizza ${self.price}>'
+ __table_args__ = (
+     db.CheckConstraint('price >= 1 AND price <=30', name= 'check_price_range'),
+
+ )
