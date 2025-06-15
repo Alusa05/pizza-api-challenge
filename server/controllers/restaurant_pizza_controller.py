@@ -19,4 +19,19 @@ def create_restaurant_pizza():
         pizza = rp.pizza
         restaurant = rp.restaurant
 
-        
+        return jsonify({
+            "id": rp.id,
+            "price": rp.price,
+            "pizza": {
+                "id": pizza.id,
+                "name": pizza.name,
+                "ingredients": pizza.ingredients
+            },
+            "restaurant": {
+                "id": restaurant.id,
+                "name": restaurant.name,
+                "address": restaurant.address
+            }
+        }), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
