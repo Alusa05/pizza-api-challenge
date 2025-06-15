@@ -17,18 +17,13 @@ from server.models.restaurant_pizza import RestaurantPizza
     
 
     # Register blueprints
-    from server.controllers import restaurant_controller
-    from server.controllers  import pizza_controller
-    from server.controllers import restaurant_pizza_controller
-
-   
-
-
-   
-
+from server.controllers import restaurant_controller
+from server.controllers  import pizza_controller
+from server.controllers import restaurant_pizza_controller
+ 
     # Add seed command
-    @app.cli.command("seed")
-    def seed_command():
+@app.cli.command("seed")
+def seed_command():
         """Seed the database with sample data."""
         from server.seed import seed_data
         seed_data()
