@@ -1,9 +1,11 @@
-from flask import request, jsonify
-from server.app import app, db
+from flask import Blueprint,  jsonify
+from server.extensions import  db
 from server.models.restaurant import Restaurant
 from server.models.restaurant_pizza import RestaurantPizza
 
-@app.route('/restaurants', methods=['GET'])
+restaurant_bp = Blueprint('restaurant', __name__)
+
+@restaurant_bp.route('/restaurants', methods=['GET'])
 def get_restaurants():
     restaurants = Restaurant.query.all()
     return jsonify([{
@@ -13,7 +15,7 @@ def get_restaurants():
     }
     for r in restaurants])
 
-@app.route('/restauran',  methods=['GET'])
+@restaurant_bp.route('/restaurant/<int:id>',  methods=['GET'])
 def get_restaurant(id):
     restaurant = Restaurant.query.get(id)
     if not restaurant:
