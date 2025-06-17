@@ -1,36 +1,29 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from config import Config
 
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object('server.config.Config')
-    
+    app.config.from_object(config_class)
+
     db.init_app(app)
     migrate.init_app(app, db)
 
-    with app.app_context():
-       
-        
-        db.create_all()
+    from server.controllers.restaurant_controller import restaurants_bp
+    from server.controllers.pizza_controller import pizzas_bp
+    from server.controllers.restaurant_pizza_controller import restaurant_pizzas_bp
 
-        from server.controllers.restaurant_controller import restaurant_bp
-        from server.controllers.pizza_controller import pizza_bp
-        from server.controllers.restaurant_pizza_controller import restaurant_pizza_bp
-
-        app.register_blueprint(restaurant_bp)
-        app.register_blueprint(pizza_bp)
-        app.register_blueprint(restaurant_pizza_bp)
-
-    @app.cli.command("seed")
-    def seed_command():
-        from server.seed import seed_data
-        seed_data()
-        print("Database seeded successfully!")
+    app.register_blueprint(restaurants_bp)
+    app.register_blueprint(pizzas_bp)
+    app.register_blueprint(restaurant_pizzas_bp)
 
     return app
 
 app = create_app()
+
+# Import models after db initialization to avoid circular imports
+from server.models import restaurant, pizza, restaurant_pizza
