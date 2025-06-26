@@ -9,9 +9,9 @@ class Pizza(db.Model):
 
     restaurant_pizzas = db.relationship('RestaurantPizza', backref='pizza')
 
-    def __Repr__(self):
+    def __repr__(self):
         return f'<Pizza {self.name}>'
-    
+
     def to_dict(self):
         return {
             'id': self.id,
