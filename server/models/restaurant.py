@@ -12,9 +12,4 @@ class Restaurant(db.Model):
     def __repr__(self):
         return f'<Restaurant {self.name}>'
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'address': self.address
-        }
+    
